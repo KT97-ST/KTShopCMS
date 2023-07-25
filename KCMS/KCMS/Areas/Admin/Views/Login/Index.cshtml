@@ -3,6 +3,7 @@
     Layout = null;
 }
 
+@model KCMS.Areas.Admin.Models.LoginModel
 <!DOCTYPE html>
 <html data-bs-theme="light" lang="en-US" dir="ltr">
 <meta http-equiv="content-type" content="text/html;charset=utf-8" />
@@ -84,19 +85,33 @@
                                         </div>
                                         <div class="col-auto fs--1 text-600"><span class="mb-0 fw-semi-bold">New User?</span> <span><a href="register.html">Create account</a></span></div>
                                     </div>
-                                    <form>
-                                        <div class="mb-3"><label class="form-label" for="split-login-email">Email address</label><input class="form-control" id="split-login-email" type="email" /></div>
+                                    @using (Html.BeginForm("Login", "Login", FormMethod.Post))
+                                    {
+                                        @Html.ValidationSummary(false, "", new { @class = "text-danger" })
                                         <div class="mb-3">
-                                            <div class="d-flex justify-content-between"><label class="form-label" for="split-login-password">Password</label></div><input class="form-control" id="split-login-password" type="password" />
+                                            <label class="form-label" for="split-login-email">User Name</label>
+                                            @*<input class="form-control" id="split-login-email" type="email" />*@
+                                            @Html.TextBoxFor(model => model.UserName, new { @class = "form-control", @autofocus = "autofocus" })
+                                            @*@Html.ValidationMessageFor(model => model.UserName, "", new { @class = "error" })*@
+                                        </div>
+                                        <div class="mb-3">
+                                            <div class="d-flex justify-content-between"><label class="form-label" for="split-login-password">Password</label></div>
+                                            @*<input class="form-control" id="split-login-password" type="password" />*@
+                                            @Html.PasswordFor(model => model.PassWord, new { @class = "form-control" })
+                                            @* @Html.ValidationMessageFor(model => model.PassWord, "", new { @class = "error" })*@
                                         </div>
                                         <div class="row flex-between-center">
                                             <div class="col-auto">
-                                                <div class="form-check mb-0"><input class="form-check-input" type="checkbox" id="split-checkbox" /><label class="form-check-label mb-0" for="split-checkbox">Remember me</label></div>
+                                                <div class="form-check mb-0">
+                                                    @*<input class="form-check-input" type="checkbox" id="split-checkbox" />*@
+                                                    @Html.CheckBoxFor(model => model.RememberMe)
+                                                    <label class="form-check-label mb-0" for="split-checkbox">Remember me</label>
+                                                </div>
                                             </div>
                                             <div class="col-auto"><a class="fs--1" href="forgot-password.html">Forgot Password?</a></div>
                                         </div>
                                         <div class="mb-3"><button class="btn btn-primary d-block w-100 mt-3" type="submit" name="submit">Log in</button></div>
-                                    </form>
+                                    }
                                     <div class="position-relative mt-4">
                                         <hr />
                                         <div class="divider-content-center">or log in with</div>

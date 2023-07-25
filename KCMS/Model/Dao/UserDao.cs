@@ -18,6 +18,20 @@ namespace Model.Dao
             context = new KTShopDbContext();
         }
 
+        public User GetById(int userID)
+        {
+            var res = context.Database.SqlQuery<User>("sp_GetUserByID @UserID", userID).SingleOrDefault();
+            return res;
+        }
+
+        public User GetByUserName(string userName)
+        {
+            var parameters = new SqlParameter("@UserName", userName);
+            var res = context.Database.SqlQuery<User>("sp_GetUserByUserName @UserName", parameters).SingleOrDefault();
+            return res;
+        }
+
+
         public int Insert(User user)
         {
             var parameters = new object[]
@@ -59,15 +73,15 @@ namespace Model.Dao
             return res;
         }
 
-        public bool Login(string username, string password)
+        public int Login(string username, string password)
         {
             var parameters = new object[]
             {
-                new SqlParameter("@username", username),ss
+                new SqlParameter("@username", username),
                 new SqlParameter("@password", password)
             };
 
-            var res = context.Database.SqlQuery<bool>("Sp_User_Login @username,@password", parameters).SingleOrDefault();
+            var res = context.Database.SqlQuery<int>("Sp_User_Login @username,@password", parameters).SingleOrDefault();
             return res;
         }
     }
