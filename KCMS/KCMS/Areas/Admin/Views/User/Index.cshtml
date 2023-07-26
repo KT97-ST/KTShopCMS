@@ -1,80 +1,84 @@
-﻿@model Model.EF.User
-
+﻿@model List<Model.EF.User>
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Quản lý người dùng";
     Layout = "~/Areas/Admin/Views/Shared/_Layouts.cshtml";
 }
 @section header
     {
-    User
+    Người dùng
 }
 <div class="card mb-3">
     <div class="card-header">
         <div class="row flex-between-end">
             <div class="col-auto align-self-center">
-                <h5 class="mb-0" data-anchor="data-anchor" id="basic-form">Thêm mới</h5>
+                <h5 class="mb-0" data-anchor="data-anchor" id="basic-form">Danh sách người dùng</h5>
             </div>
         </div>
     </div>
     <div class="card-body bg-light">
         <div class="tab-content">
-            <div class="tab-pane preview-tab-pane active show" role="tabpanel" aria-labelledby="tab-dom-7a421d91-36e1-4a1c-94fa-15531761cb81" id="dom-7a421d91-36e1-4a1c-94fa-15531761cb81">
-                @using (Html.BeginForm("Create", "User", FormMethod.Post))
-                {
-                    @Html.AntiForgeryToken()
-                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                    <div class="mb-3">
-                        @Html.LabelFor(model => model.UserName, htmlAttributes: new { @class = "form-label" })
-                        @Html.TextBoxFor(model => model.UserName, new { @class = "form-control" })
-                        @Html.ValidationMessageFor(model => model.UserName, "", new { @class = "text-danger" })
+            <div id="tableExample3" data-list='{"valueNames":["name","email","age"],"page":5,"pagination":true}'>
+                <div class="row justify-content-end g-0">
+                    <div class="col-auto col-sm-5 mb-3">
+                        <form>
+                            <div class="input-group">
+                                <input class="form-control form-control-sm shadow-none search" type="search" placeholder="Search..." aria-label="search" />
+                                <div class="input-group-text bg-transparent"><span class="fa fa-search fs--1 text-600"></span></div>
+                            </div>
+                        </form>
                     </div>
-                    <div class="mb-3">
-                        @Html.LabelFor(model => model.Password, htmlAttributes: new { @class = "form-label" })
-                        @Html.PasswordFor(model => model.Password, new { @class = "form-control" })
-                        @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
-                    </div>
-                    <div class="mb-3">
-                        @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "form-label" })
-                        @Html.TextBoxFor(model => model.Name, new { @class = "form-control" })
-                        @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
-                    </div>
-                    <div class="mb-3">
-                        @Html.LabelFor(model => model.Address, htmlAttributes: new { @class = "form-label" })
-                        @Html.TextBoxFor(model => model.Address, new { @class = "form-control" })
-                        @Html.ValidationMessageFor(model => model.Address, "", new { @class = "text-danger" })
-                    </div>
-                    <div class="mb-3">
-                        @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "form-label" })
-                        @Html.TextBoxFor(model => model.Email, new { @class = "form-control" })
-                        @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
-                    </div>
-                    <div class="mb-3">
-                        @Html.LabelFor(model => model.Phone, htmlAttributes: new { @class = "form-label" })
-                        @Html.TextBoxFor(model => model.Phone, new { @class = "form-control" })
-                        @Html.ValidationMessageFor(model => model.Phone, "", new { @class = "text-danger" })
-                    </div>
-                    <div class="mb-3 form-check">
-                        @*<input class="form-check-input" id="basic-form-checkbox" type="checkbox">
-                <label class="form-check-label" for="basic-form-checkbox">Remember me</label>*@
-                        @Html.LabelFor(model => model.Status, htmlAttributes: new { @class = "form-label" })
-                        @Html.CheckBoxFor(model => model.Status, new { @class = "form-check-input" })
-                        @Html.ValidationMessageFor(model => model.Status, "", new { @class = "text-danger" })
-                    </div>
-                    <button class="btn btn-primary" type="submit">Submit</button>
-                }
+                </div>
+                <div class="table-responsive scrollbar">
+                    <table class="table table-bordered table-striped fs--1 mb-0">
+                        <thead class="bg-200 text-900">
+                            <tr>
+                                <th class="sort" data-sort="username">User Name</th>
+                                <th class="sort" data-sort="password">PassWord</th>
+                                <th class="sort" data-sort="address">Address</th>
+                                <th class="sort" data-sort="email">Email</th>
+                                <th class="sort" data-sort="phone">Phone</th>
+                                <th class="sort" data-sort="crateby">Create By</th>
+                                <th class="sort" data-sort="createdate">Create Date</th>
+                                <th class="sort" data-sort="updateby">Update By</th>
+                                <th class="sort" data-sort="updatedate">Update Date</th>
+                                <th class="sort" data-sort="status">Status</th>
+                                <th ></th>
+                            </tr>
+                        </thead>
+                        <tbody class="list">
+                            @foreach (var user in Model)
+                            {
+                            <tr>
+                                <td class="username">@user.UserName</td>
+                                <td class="password">@user.Password</td>
+                                <td class="address">@user.Address</td>
+                                <td class="email">@user.Email</td>
+                                <td class="phone">@user.Phone</td>
+                                <td class="crateby">@user.CreateBy</td>
+                                <td class="createdate">@user.CreateDate</td>
+                                <td class="updateby">@user.ModifiledBy</td>
+                                <td class="updatedate">@user.ModifiledDate</td>
+                                <td class="status">@user.Status</td>
+                                <td class="align-middle white-space-nowrap text-end">
+                                    <div class="dropdown font-sans-serif btn-reveal-trigger">
+                                        <button class="btn btn-link text-600 btn-sm dropdown-toggle dropdown-caret-none btn-reveal" type="button" id="dropdown-total-sales-ecomm" data-bs-toggle="dropdown" data-boundary="viewport" aria-haspopup="true" aria-expanded="false"><svg class="svg-inline--fa fa-ellipsis-h fa-w-16 fs--2" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="ellipsis-h" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" data-fa-i2svg=""><path fill="currentColor" d="M328 256c0 39.8-32.2 72-72 72s-72-32.2-72-72 32.2-72 72-72 72 32.2 72 72zm104-72c-39.8 0-72 32.2-72 72s32.2 72 72 72 72-32.2 72-72-32.2-72-72-72zm-352 0c-39.8 0-72 32.2-72 72s32.2 72 72 72 72-32.2 72-72-32.2-72-72-72z"></path></svg><!-- <span class="fas fa-ellipsis-h fs--2"></span> Font Awesome fontawesome.com --></button>
+                                        <div class="dropdown-menu dropdown-menu-end border py-2" aria-labelledby="dropdown-total-sales-ecomm">
+                                            <a class="dropdown-item" href="#!">View</a>
+                                            <a class="dropdown-item" href="/Admin/User/Edit/@user.ID">Edit</a>
+                                            <div class="dropdown-divider"></div><a class="dropdown-item text-danger" href="#!">Remove</a>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+                <div class="d-flex justify-content-center mt-3">
+                    <button class="btn btn-sm btn-falcon-default me-1" type="button" title="Previous" data-list-pagination="prev"><span class="fas fa-chevron-left"></span></button>
+                    <ul class="pagination mb-0"></ul><button class="btn btn-sm btn-falcon-default ms-1" type="button" title="Next" data-list-pagination="next"><span class="fas fa-chevron-right"> </span></button>
+                </div>
             </div>
         </div>
     </div>
 </div>
-<div class="card mb-3">
-    <div class="bg-holder d-none d-lg-block bg-card" style="background-image:url(../../../assets/img/icons/spot-illustrations/corner-4.png);"></div>
-    <!--/.bg-holder-->
-    <div class="card-body position-relative">
-        <div class="row">
-            <div class="col-lg-8">
-                @Html.ActionLink("Back to List", "Index")
-            </div>
-        </div>
-    </div>
-</div>
-

@@ -13,9 +13,18 @@ namespace KCMS.Areas.Admin.Controllers
         // GET: Admin/User
         public ActionResult Index()
         {
+            var dao = new UserDao();
+            List<User> userList = dao.GetUserList();
+            return View(userList);
+        }
+
+        [HttpGet]
+        public ActionResult Create()
+        {
             return View();
         }
 
+        [HttpPost]
         public ActionResult Create(User user)
         {
             if (ModelState.IsValid)
@@ -36,5 +45,11 @@ namespace KCMS.Areas.Admin.Controllers
             return View("Index");
         }
 
+        public ActionResult Edit(int id)
+        {
+            var dao = new UserDao();
+            var res = dao.GetUserById(id);
+            return View(res);
+        }
     }
 }

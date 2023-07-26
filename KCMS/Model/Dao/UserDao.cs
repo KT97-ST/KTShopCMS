@@ -18,9 +18,16 @@ namespace Model.Dao
             context = new KTShopDbContext();
         }
 
-        public User GetById(int userID)
+        public List<User> GetUserList()
         {
-            var res = context.Database.SqlQuery<User>("sp_GetUserByID @UserID", userID).SingleOrDefault();
+            var res = context.Database.SqlQuery<User>("[sp_GetUserList]").ToList();
+            return res;
+        }
+
+        public User GetUserById(int userID)
+        {
+            var userIDParameter = new SqlParameter("@UserID", userID);
+            var res = context.Database.SqlQuery<User>("sp_GetUserByID @UserID", userIDParameter).SingleOrDefault();
             return res;
         }
 
